@@ -19,6 +19,7 @@ RUN if [ "`curl --version |cut -d ' ' -f 3 |head -1 |cut -d '-' -f 1 |cut -b 2-`
 # clean cache install
 RUN sudo rm -rf /var/lib/apt/lists/* && sudo rm -rf /tmp/*
 
+WORKDIR /home/coder/projects
 VOLUME /home/coder/projects
 
 USER coder
