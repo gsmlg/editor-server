@@ -1,4 +1,4 @@
-FROM Codercom/code-server:3.7.4
+FROM codercom/code-server:3.7.4
 
 # update package list
 RUN apt update && apt upgrade -y && \
@@ -18,4 +18,5 @@ RUN GOPKG="go1.15.6.linux-${ARCH}.tar.gz" && \
 # clean cache install
 RUN rm -rf /var/lib/apt/lists/*
 
+VOLUME /home/coder/projects
 
