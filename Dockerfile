@@ -1,22 +1,22 @@
 FROM codercom/code-server:3.7.4
 
 # update package list
-RUN apt update && apt upgrade -y
+RUN sudo apt update && sudo apt upgrade -y
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    apt install -y nodejs && \
-    npm install -g yarn
+RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
+    sudo apt install -y nodejs && \
+    sudo npm install -g yarn
 
 # install golang
-RUN export ARCH="$(dpkg --print-architecture)" && \
+RUN ARCH="$(dpkg --print-architecture)" && \
     GOPKG="go1.15.6.linux-${ARCH}.tar.gz" && \
-    curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" && \
-    tar -C /usr/local -xzf "/tmp/${GOPKG}" && \
-    echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
+    sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" && \
+    sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" && \
+    sudo echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
 
 # clean cache install
-RUN rm -rf /var/lib/apt/lists/* && /tmp/*
+RUN sudo rm -rf /var/lib/apt/lists/* && sudo rm -rf /tmp/*
 
 VOLUME /home/coder/projects
 
