@@ -22,4 +22,4 @@ RUN sudo rm -rf /var/lib/apt/lists/* && sudo rm -rf /tmp/*
 WORKDIR /home/coder/projects
 VOLUME /home/coder/projects
 
-USER coder
+# USER coder
