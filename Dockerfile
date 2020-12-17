@@ -1,5 +1,7 @@
 FROM codercom/code-server:3.7.4
 
+USER root
+
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
@@ -19,3 +21,4 @@ RUN sudo rm -rf /var/lib/apt/lists/* && sudo rm -rf /tmp/*
 
 VOLUME /home/coder/projects
 
+USER coder
