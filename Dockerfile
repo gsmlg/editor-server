@@ -9,8 +9,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
     sudo npm install -g yarn
 
 # install golang
-RUN ARCH="$(dpkg --print-architecture)" && \
-    GOPKG="go1.15.6.linux-${ARCH}.tar.gz" && \
+RUN export ARCH="$(sudo dpkg --print-architecture)" && \
+    export GOPKG="go1.15.6.linux-${ARCH}.tar.gz" && \
     sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" && \
     sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" && \
     sudo echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
