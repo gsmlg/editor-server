@@ -5,8 +5,8 @@ USER root
 # update package list and install zshell
 RUN apt update && apt upgrade -y
 
-# install zsh
-RUN apt install -y zsh 
+# install zsh and silver searcher
+RUN apt install -y zsh silversearcher-ag
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
