@@ -6,7 +6,7 @@ USER root
 RUN apt update && apt upgrade -y
 
 # install zsh
-RUN apt install -y zsh && chsh -s /bin/zsh
+RUN apt install -y zsh 
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
@@ -19,9 +19,6 @@ RUN if [ "`curl --version |cut -d ' ' -f 3 |head -1 |cut -d '-' -f 1 |cut -b 2-`
     tar -C /usr/local -xzf "/tmp/${GOFILENAME}" && \
     echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
 
-# install on my zsh
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 # clean cache install
 RUN rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
@@ -29,3 +26,8 @@ WORKDIR /home/coder/projects
 VOLUME /home/coder/projects
 
 USER coder
+
+# install on my zsh
+RUN chsh -s /bin/zsh && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
