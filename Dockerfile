@@ -6,7 +6,8 @@ USER root
 RUN apt update && apt upgrade -y
 
 # install zsh and silver searcher
-RUN apt install -y zsh silversearcher-ag
+RUN apt install -y zsh silversearcher-ag && \
+    chsh -s /bin/zsh coder
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
@@ -28,6 +29,6 @@ VOLUME /home/coder/projects
 USER coder
 
 # install on my zsh
-RUN chsh -s /bin/zsh && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 
