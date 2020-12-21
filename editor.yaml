@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: editor-server
+  namespace: develop
+spec:
+  selector:
+    matchLabels:
+      workload.user.gsmlg.com/workloadselector: gsmlg-editor-server
+  template:
+    metadata:
+      labels:
+        workload.user.gsmlg.com/workloadselector: gsmlg-editor-server
+    spec:
+      containers:
+      - env:
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: PASSWORD
+              name: editor-secrets
+        image: docker.zdns.cn/zcloud/editor-server
+        imagePullPolicy: Always
+        name: editor-server
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 3000
+          name: preview
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /home/coder/projects
+          name: projects
+        - mountPath: /home/coder/.ssh
+          name: ssh-config
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+      - name: projects
+        persistentVolumeClaim:
+          claimName: projects
+      - name: ssh-config
+        secret:
+          defaultMode: 0644
+          optional: false
+          secretName: gitlab-ssh-config
+          items:
+          - key: id_rsa
+            mode: 0400
+
