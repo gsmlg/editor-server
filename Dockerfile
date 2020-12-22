@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.7.4
+FROM codercom/code-server:3.8.0
 
 USER root
 
@@ -13,6 +13,7 @@ RUN apt install -y zsh silversearcher-ag && \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt install -y nodejs && \
     npm install -g yarn && \
+    chown coder:coder -R /usr/local && \
     chown coder:coder -R /usr/lib/node_modules && \
     chown coder:coder /usr/bin
 
@@ -25,12 +26,9 @@ RUN if [ "`curl --version |cut -d ' ' -f 3 |head -1 |cut -d '-' -f 1 |cut -b 2-`
 # clean cache install
 RUN rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
-WORKDIR /home/coder/projects
-VOLUME /home/coder/projects
+WORKDIR /home/coder
+VOLUME /home/coder
 
 USER coder
-
-# install on my zsh
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 
